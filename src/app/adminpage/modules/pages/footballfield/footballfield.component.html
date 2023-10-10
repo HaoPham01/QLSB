@@ -1,0 +1,142 @@
+<p-toast></p-toast>
+<div class="grid">
+    <button *ngIf="loading" class="btn btn-success offset-md-5 cursor-wait mt-4" type="button" disabled>
+        Loading...<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+     </button>
+</div>
+<div class="card" *ngIf="!loading">
+    <p-toolbar styleClass="p-mb-4">
+        <div class="row w-100">
+            <div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                <li class="breadcrumb-item text-uppercase">Admin</li>
+                <li class="breadcrumb-item text-success text-uppercase" aria-current="page">Quản lý sân bóng</li>
+                </ol>
+            </div>
+        </div>
+    
+        <div class="d-flex justify-content-start">
+            <button class="btn btn-success btn-circle m-1" id="button-plus" (click)="openNew()">
+                <i class="fa fa-plus"></i>
+            </button>
+            <button class="btn btn-success btn-circle m-1" id="button-refresh" (click)="loadField()">
+                <i class="fa fa-refresh"></i>
+            </button>
+        </div>    
+        <div class="input-group rounded justify-content-end w-25">
+            <input [(ngModel)]="keyword" type="search" class="form-control rounded" placeholder="Tìm kiếm tên sân" aria-label="Search" aria-describedby="search-addon"/>
+            <span class="input-group-text border-0" id="search-addon">
+              <i class="fa fa-search" (click)="searchField(keyword)"></i>
+            </span>
+        </div>
+    </p-toolbar>
+    <p-table #dt [value]="fields" [rows]="5" [paginator]="true" [globalFilterFields]="['fieldId']" 
+        [rowHover]="true" dataKey="adminId"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        
+        
+        <ng-template pTemplate="header">
+            <tr>
+                <th>STT</th>
+                <th pSortableColumn="fieldName">Tên sân <p-sortIcon field="fieldName"></p-sortIcon></th>
+                <th pSortableColumn="type">Loại sân<p-sortIcon field="type"></p-sortIcon></th>
+                <th pSortableColumn="fullName">Tạo bởi<p-sortIcon field="adminId"></p-sortIcon></th>
+                <th pSortableColumn="status">trạng thái<p-sortIcon field="status"></p-sortIcon></th>
+                <th pSortableColumn="createDate">Ngày tạo<p-sortIcon field="createDate"></p-sortIcon></th>
+                <th pSortableColumn="updateDate">Ngày sửa<p-sortIcon field="updateDate"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-field let-rowIndex="rowIndex">
+            <tr>
+                <td>{{rowIndex}}</td>
+                <td>{{field.fieldName}}</td>
+                <td>{{field.type}}</td>
+                <td>{{field.fullName}}</td>
+                <td>{{field.status | status}}</td>
+                <td>{{field.createDate | date: "dd/MM/yyyy"}}</td>
+                <td>{{field.updateDate | date: "dd/MM/yyyy"}}</td>
+                <td>
+
+                    <button class="btn btn-warning rounded-circle m-1" (click)="editField(field)">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                    <button class="btn btn-danger rounded-circle m-1" (click)="deleteField(field)">
+                        <i class="fa fa-trash"></i>
+                    </button>                    
+                    
+                </td>
+            </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div class="p-d-flex p-ai-center p-jc-between">
+                    Tổng cộng có {{fields ? fields.length : 0 }} Field.
+                </div>
+            </ng-template>
+    </p-table>
+</div>
+
+<!------------------------------------------------------DiaLog San Bong--------------------------------------------------------------->
+<p-dialog [(visible)]="fieldDialog" [style]="{width: '1000px'}" header="Chi tiết sân bóng" [modal]="true" styleClass="p-fluid">       
+        <div class="row">
+            <div class="form-group col-md-6">
+              <label for="fieldName">Tên sân</label>
+              <input type="fieldName" [(ngModel)]="field.fieldName" class="form-control" id="fieldName" placeholder="Tên sân">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="type">Loại sân</label>
+                <select id="type" class="form-select" [(ngModel)]="field.type">
+                <option value="5x5">sân 5x5</option>
+                <option value="7x7">sân 7x7</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="type">Trạng thái</label>
+                <select id="type" class="form-select" [(ngModel)]="field.status" >
+                <option value="1">Đang hoạt động</option>
+                <option value="-1">Tạm ngưng</option>
+                </select>
+            </div>
+            <div *ngIf="hidebtn==false" class="form-group mt-2">
+            <button class="btn btn-warning" (click)="openPrice(field.fieldId)">
+                <i class="fa fa-pencil"> Điều chỉnh giá sân</i>
+            </button>
+            </div>
+        </div>   
+    <ng-template pTemplate="footer">
+        <button class="btn " (click)="hideDialog()">
+            <i class="fa fa-times"></i> Hủy
+        </button>
+        <button class="btn " (click)="saveField()">
+            <i class="fa fa-check"></i> Cháp nhận
+        </button>        
+    </ng-template>
+</p-dialog>
+<!------------------------------------------------------DiaLog San Bong--------------------------------------------------------------->
+
+
+
+<!--------------------------------------------------------DiaLog Gia------------------------------------------------------------------>
+<p-dialog [(visible)]="priceDialog" [style]="{width: '700px'}" header="Điều chỉnh giá sân" [modal]="true" styleClass="p-fluid">       
+    <div class="row" *ngFor="let item of prices">
+        <div class="form-group col-md-3">
+            <label for="startTime">Thời gian bắt đầu</label>
+            <input type="startTime" [(ngModel)]="item.startTime" class="form-control" placeholder="Tên sân">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="endTime">Thời gian kết thúc</label>
+            <input type="endTime" [(ngModel)]="item.endTime" class="form-control" placeholder="Tên sân">
+          </div>
+        <div class="form-group col-md-3">
+          <label for="price1">Giá sân</label>
+          <input type="price1" [(ngModel)]="item.price1" class="form-control" placeholder="Tên sân">
+        </div>
+        <div class="col-md-3 mt-4">
+            <button class="btn btn-success" (click)="savePrice(item)">
+                <i class="fa fa-check"> Cập nhật</i>
+            </button>  
+        </div>
+    </div>   
+</p-dialog>
+<!--------------------------------------------------------DiaLog Gia------------------------------------------------------------------>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

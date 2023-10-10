@@ -1,0 +1,57 @@
+<div class="outer">
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
+                <div class="panel border bg-white">
+                    <div class="panel-heading">
+                        <h3 class="pt-3 font-weight-bold">Đăng ký</h3>
+                    </div>
+                    <div class="panel-body p-3">
+                        <form [formGroup]="signUpForm">
+                            <div class="form-group pt-3">
+                                <div class="input-field" [class.error]="signUpForm.controls['Email'].dirty && signUpForm.hasError('required','Email')">
+                                    <span class="fa fa-envelope p-2"></span>
+                                    <input formControlName="Email" type="text" placeholder="Email">
+                                </div>
+                            </div>
+                            <small class="text-danger" *ngIf="signUpForm.controls['Email'].dirty && signUpForm.hasError('required','Email')">Email là bắt buộc</small>
+                            <div class="form-group pt-3">
+                                <div class="input-field" [class.error]="signUpForm.controls['Password'].dirty && signUpForm.hasError('required','Password')">
+                                    <span class="fa fa-lock p-2"></span>
+                                    <input formControlName="Password" [type]="type" placeholder="Mật khẩu">
+                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}}"></span>
+                                </div>
+                            </div>
+                            <small class="text-danger" *ngIf="signUpForm.controls['Password'].dirty && signUpForm.hasError('required','Password')">Mật khẩu là bắt buộc</small>
+                            <div class="form-group pt-3">
+                                <div class="input-field" [class.error]="signUpForm.controls['FullName'].dirty && signUpForm.hasError('required','FullName')">
+                                    <span class="fa fa-user p-2"></span>
+                                    <input formControlName="FullName" type="text" placeholder="Họ và tên">
+                                </div>
+                            </div>
+                            <small class="text-danger" *ngIf="signUpForm.controls['FullName'].dirty && signUpForm.hasError('required','FullName')">Họ tên là bắt buộc</small>
+                            <div class="form-group pt-3">
+                                <div class="input-field" [class.error]="signUpForm.controls['Address'].dirty && signUpForm.hasError('required','Address')">
+                                    <span class="fa fa-lock p-2"></span>
+                                    <input formControlName="Address" type="text" placeholder="Địa chỉ">
+                                </div>
+                            </div>
+                            <small class="text-danger" *ngIf="signUpForm.controls['Address'].dirty && signUpForm.hasError('required','Address')">Địa chỉ là bắt buộc</small>
+                            <div class="form-group pt-3">
+                                <div class="input-field" [class.error]="signUpForm.controls['Phone'].dirty && signUpForm.hasError('required','Phone')">
+                                    <span class="fa fa-phone p-2"></span>
+                                    <input formControlName="Phone" type="text" placeholder="Số điện thoại">
+                                </div>
+                            </div>
+                            <small class="text-danger" *ngIf="signUpForm.controls['Phone'].dirty && signUpForm.hasError('required','Phone')">Số điện thoại là bắt buộc</small>
+                            <button (click)="onSignUp()" type="submit" class="btn btn-primary btn-block mt-4 w-100">Đăng ký</button>
+                            <div class="text-center pt-4 text-muted">
+                              Bạn đã có tài khoản? <a id="forget" href="/userLogin">Đăng nhập</a>
+                            </div>
+                          </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

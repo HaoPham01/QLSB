@@ -1,0 +1,70 @@
+<app-header></app-header>
+<div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="container">
+  <ol class="breadcrumb m-2">
+    <li class="breadcrumb-item" style="color: #33465F;">Trang chủ</li>
+    <li class="breadcrumb-item" aria-current="page" style="color: #33465F;">Đặt sân</li>
+    <li class="breadcrumb-item" aria-current="page" style="color: #04BFBF;">Tiến hành thanh toán</li>
+  </ol>
+</div>
+<div class="container mt-4">
+  <h3 class="text-center">THANH TOÁN TIỀN SÂN</h3>
+  <div class="row">
+    <div class="col-8"><h5 class="text-center">Thông tin thanh toán</h5>
+     <div class="d-flex justify-content-center mt-4">
+        <div class="card">
+          <div class="card-body">
+              <div>
+                <div class="row mt-2">
+                  <span class="fw-bold col">Tên sân:</span>
+                  <span class="col">{{bookings.fieldName}}</span>
+                </div>
+                <div class="row mt-2">
+                  <span class="fw-bold col">Họ tên người đặt:</span>
+                  <span class="col">{{bookings.fullName}}</span>
+               </div>
+              </div>
+            <div>
+              <div class="fw-bold mt-2 mb-2">Số tiền thanh toán</div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                <label class="form-check-label" for="inlineRadio1">Thanh toán tiền cọc 30%</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                <label class="form-check-label" for="inlineRadio2">Thanh toán đầy đủ tiền sân</label>
+              </div>
+            </div>
+            <div class="form-group mt-2">
+              <label for="type" class="fw-bold">Hình thức thanh toán</label>
+              <select class="form-select mt-2" [(ngModel)]="vnPay.typePaymentVN">
+              <option value="2">Thanh toán ngân hàng nội địa</option>
+              <option value="3">Thanh toán ngân hàng nước ngoài</option>
+              </select>
+              <button class="btn mt-2" style="background-color: #04BFBF; color: azure;" (click)="thanhToan()">
+                <i class="fa fa-check"></i> Thanh Toán
+              </button>      
+            </div>
+            <div>
+              <!-- <button class="btn mt-2" style="background-color: #04BFBF; color: azure;" (click)="thanhToan()">
+                <i class="fa fa-check"></i> Thanh Toán
+              </button>       -->
+            </div>
+          </div>
+        </div>
+     </div>
+    </div>
+    <div class="col-4"><h5 class="text-center">Tổng tiền sân</h5>
+      <div class="d-flex justify-content-center mt-4">
+        <div class="card" style="width: 18rem;">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><p class="fst-italic">Giá sân: {{bookings.priceBooking}} Vnđ</p></li>
+            <li class="list-group-item"><p class="fst-italic">Phụ phí: 0</p></li>
+            <li class="list-group-item"><p class="fst-italic">Giảm giá: 0</p></li>
+            <li class="list-group-item">Tổng tiền: {{bookings.priceBooking}} Vnđ</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

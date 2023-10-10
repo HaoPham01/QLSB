@@ -1,0 +1,41 @@
+// Theme Name: EliteCorp
+// Theme Coder: Osama Elzero
+// #33465F
+// #ec1c23
+
+
+
+.upper-bar{
+    background-color: #33465F;
+    color: #FFF;
+    padding: 8px;
+}
+
+.upper-bar span{
+    color: #bfc6c9
+}
+
+
+.navbar-brand span{
+    font-size: 35px;
+}
+
+.navbar-brand span:first-child{
+    color: #33465F;
+}
+
+.navbar-brand span:last-child{
+    color: #04BFBF;
+}
+.navbar-brand .nav-link{
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-left: 20px;
+    color: #33465F;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link.active{
+    color: #04BFBF !important;
+}
+

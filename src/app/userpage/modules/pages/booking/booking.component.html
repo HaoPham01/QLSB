@@ -1,0 +1,82 @@
+<div class="container pb-4">
+    <div class="pb-4">
+        <p class="fw-bold" style="color: #33465F;">CHỌN SÂN BÓNG</p>
+        <ul class="nav nav-tabs">
+          <li class="" *ngFor="let tab of tabs">
+            <button class="nav-link " style="color: #33465F;" (click)="getEventsFromField(tab.fieldId)" [class.active]="activeTabId === tab.fieldId "
+             >{{tab.fieldName}}</button>
+          </li>
+        </ul>
+        <!-- <div class="tab-content">
+            <div class="tab-pane show active fade" *ngFor="let tab of tabs"  [class.show]="activeTabId === tab.fieldId ">
+              {{tab.type}}
+            </div>
+        </div> -->
+    </div>
+
+    <div class="row">
+        <div class="col-2 align-self-sm-center">
+            <ul class="list-group">
+                <li class="list-group-item" style="background-color: #ffdc2826; ">Lịch sân trống hôm nay</li>
+                <li class="list-group-item" style="background-color: #04BFBF; color: #fff;">Sân đã được đặt</li>
+                <li class="list-group-item">Sân trống</li>
+            </ul>
+        </div>
+        <div class="col-10 w-75">
+            <full-calendar *ngIf="calendarOptions" #fullcalendar [options]="calendarOptions">
+                <ng-template #eventContent let-arg>
+                    <i >{{arg.event.title}}</i> <br>
+                    <b >{{arg.timeText}}</b> 
+                </ng-template>
+            </full-calendar>
+        </div>
+    </div>
+</div>
+<p-dialog [(visible)]="confirmBookingDialog" [style]="{width: '500px'}" header="Xác nhận đặt sân" [modal]="true" styleClass="p-fluid">       
+    <div class="row">
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-6 col-form-label">Người đặt sân:</label>
+            <div class="col-sm-6">
+                <input type="text" readonly class="form-control-plaintext" value="{{fullName}}">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-6 col-form-label">Tên sân:</label>
+            <div class="col-sm-6">
+                <input type="text" readonly class="form-control-plaintext" value="{{fieldName}}">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-6 col-form-label">Ngày đặt:</label>
+            <div class="col-sm-6 mt-2">
+                {{booking.startTime | date: "dd/MM/yyyy"}}
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-6 col-form-label">Thời gian bắt đầu:</label>
+            <div class="col-sm-6 mt-2">
+                {{booking.startTime | date: "HH:mm:ss"}}
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-6 col-form-label">Thời gian kết thúc:</label>
+            <div class="col-sm-6 mt-2">
+                {{booking.endTime | date: "HH:mm:ss"}}
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-6 col-form-label">Giá sân:</label>
+            <div class="col-sm-6">
+                <input type="text" readonly class="form-control-plaintext" value="{{booking.priceBooking}} Vnđ">
+            </div>
+        </div>    
+    </div>
+        <ng-template pTemplate="footer">
+            <button class="btn btn-danger" (click)="confirmBookingDialog = false">
+                <i class="fa fa-times"></i> Hủy 
+            </button>
+            <button class="btn btn-success" (click)="thanhToan()">
+                <i class="fa fa-check"></i> Tiến hành thanh Toán
+            </button>      
+        </ng-template>   
+</p-dialog>

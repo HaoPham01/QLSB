@@ -1,0 +1,36 @@
+
+<nav class="navbar navbar-expand-lg bg-light border m-2 rounded" >
+    <a class="navbar-brand m-3" href="#">
+        <img src="../../../../../assets/img/logo.png" alt="Logo" width="180px" >
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse m-4 " id="main-nav">
+      <ul class="navbar-nav ms-auto">
+        <div class="dropdown mt-1" style="margin-right: 10px;">
+          <a class="dropdown text-decoration-none" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: black;" >
+            <i class="fa fa-bell"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#"></a></li>
+            <!-- <li><a class="dropdown-item" href="#">Another action</a></li> -->
+          </ul>
+        </div>
+        <div class="dropdown">
+          <a class="dropdown d-flex align-items-center hidden-arrow text-decoration-none" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: black; " >
+            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="30" alt="Black and White Portrait of a Man">
+          <span class="p-1 text-decoration-none text-dark">{{Email}}</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">{{Email}}</a></li>
+            <!-- <li><a class="dropdown-item" href="#">Another action</a></li> -->
+            <li><a class="dropdown-item" href="#" (click)="logout()">Đăng xuất</a></li>
+          </ul>
+        </div>
+      </ul>
+    </div>
+
+</nav>
+
+

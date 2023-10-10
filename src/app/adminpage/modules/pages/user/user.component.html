@@ -1,0 +1,119 @@
+<p-toast></p-toast>
+<div class="grid">
+    <button *ngIf="loading" class="btn btn-success offset-md-5 cursor-wait mt-4" type="button" disabled>
+        Loading...<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+     </button>
+</div>
+<div class="card" *ngIf="!loading">
+    <p-toolbar styleClass="p-mb-4">
+            <div class="row w-100">
+                <div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                    <li class="breadcrumb-item text-uppercase">ADMIN</li>
+                    <li class="breadcrumb-item text-success text-uppercase" aria-current="page">Quản lý tài khoản User</li>
+                    </ol>
+                </div>
+            </div>
+        <div class="d-flex justify-content-start">
+            <button class="btn btn-success btn-circle m-1" id="button-plus" (click)="openNew()">
+                <i class="fa fa-plus"></i>
+            </button>
+            <button class="btn btn-success btn-circle m-1" id="button-refresh" (click)="loadUser()">
+                <i class="fa fa-refresh"></i>
+            </button>
+        </div>    
+        <div class="input-group rounded justify-content-end w-25">
+            <input [(ngModel)]="keyword" type="search" class="form-control rounded" placeholder="Tìm kiếm Email" aria-label="Search" aria-describedby="search-addon"/>
+            <span class="input-group-text border-0" id="search-addon">
+              <i class="fa fa-search" (click)="searchUser(keyword)"></i>
+            </span>
+        </div>
+    </p-toolbar>
+
+    <p-table #dt [value]="users" [rows]="5" [paginator]="true" [globalFilterFields]="['email']" 
+        [rowHover]="true" dataKey="userId"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        
+        
+        <ng-template pTemplate="header">
+            <tr>
+                <th>STT</th>
+                <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+                <th pSortableColumn="fullName">Họ Tên<p-sortIcon field="fullName"></p-sortIcon></th>
+                <th pSortableColumn="address">Địa Chỉ<p-sortIcon field="address"></p-sortIcon></th>
+                <th pSortableColumn="phone">Sđt<p-sortIcon field="phone"></p-sortIcon></th>
+                <!-- <th pSortableColumn="status">trạng thái<p-sortIcon field="status"></p-sortIcon></th> -->
+                <th pSortableColumn="createDate">Ngày tạo<p-sortIcon field="createDate"></p-sortIcon></th>
+                <th pSortableColumn="updateDate">Ngày sửa<p-sortIcon field="updateDate"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user let-rowIndex="rowIndex">
+            <tr>
+                <td>{{rowIndex}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.fullName}}</td>
+                <td>{{user.address}}</td>
+                <td>{{user.phone}}</td>
+                <!-- <td>{{user.status | status}}</td> -->
+                <td>{{user.createDate | date: "dd/MM/yyyy"}}</td>
+                <td>{{user.updateDate | date: "dd/MM/yyyy"}}</td>
+                <td>
+
+                    <button class="btn btn-warning rounded-circle m-1" (click)="editUser(user)">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                    <button class="btn btn-danger rounded-circle m-1" (click)="deleteUser(user)">
+                        <i class="fa fa-trash"></i>
+                    </button>                    
+                    
+                </td>
+            </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div class="p-d-flex p-ai-center p-jc-between">
+                    Tổng cộng có {{users ? users.length : 0 }} User.
+                </div>
+            </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="userDialog" [style]="{width: '1000px'}" header="Chi tiết User" [modal]="true" styleClass="p-fluid">        
+ 
+        <div class="row">
+            <div class="form-group col-md-6">
+              <label for="email">Email</label>
+              <input type="email" [(ngModel)]="user.email" class="form-control" id="email" placeholder="Email">
+            </div>
+            <div *ngIf="!hidePass" class="form-group col-md-6">
+              <label for="password">Mật khẩu</label>
+              <input type="password" [(ngModel)]="user.password" class="form-control" id="password" placeholder="Mật khẩu">
+            </div>
+        </div>      
+        <div class="row">
+            <div class="form-group col-md-6">
+              <label for="fullName">Họ tên</label>
+              <input type="fullName" [(ngModel)]="user.fullName" class="form-control" id="fullName" placeholder="Họ tên">
+            </div>            
+            <div class="form-group col-md-6">
+              <label for="address">Địa chỉ</label>
+              <input type="address" [(ngModel)]="user.address" class="form-control" id="address" placeholder="Địa chỉ">
+            </div>
+        </div> 
+        <div class="row">
+            <div class="form-group col-md-4 offset-4">
+              <label for="phone">Sđt</label>
+              <input type="phone" [(ngModel)]="user.phone" class="form-control" id="phone" placeholder="Số điện thoại">
+            </div>
+        </div>             
+    <ng-template pTemplate="footer">
+        <button class="btn " (click)="hideDialog()">
+            <i class="fa fa-times"></i> Hủy
+        </button>
+        <button class="btn " (click)="saveUser()">
+            <i class="fa fa-check"></i> Chấp nhận
+        </button>        
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

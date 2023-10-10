@@ -1,0 +1,90 @@
+<app-header></app-header>
+<div class="container-slide">
+    <img src="../../../../../assets/img/sanbong.png" alt="slide" style="width: 100%;">
+    <div class="centered">
+      <div class="card text-bg-light mb-3" style="width: 26rem; height: 20rem;">
+        <div class="card-body">
+          <div class="card-title"><span>TÌM </span><span>SÂN </span><span>BÓNG</span></div>
+          <p class="card-text fst-italic text-start text-muted">Tìm kiếm sân chơi và thi đấu</p>
+          <select class="form-select mt-2" aria-label="Select type">
+            <option selected>Loại sân đặt</option>
+            <option value="5x5">Sân 5</option>
+            <option value="7x7">Sân 7</option>
+          </select>
+          <div class="input-group mt-2">
+            <span class="input-group-text">Chọn ngày</span>
+            <input type="date" class="form-control">
+          </div>
+          <div class="mt-2 row">
+            <div class="col input-group">
+              <span class="input-group-text">Chọn giờ</span>
+              <input type="time" class="form-control">
+            </div>
+            <div class="col">
+              <select class="form-select" aria-label="Select time">
+                <option selected>Số giờ đặt</option>
+                <option value="5x5">1 giờ</option>
+                <option value="7x7">1 giờ 30 phút</option>
+                <option value="7x7">Nhiều giờ</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-2">
+            <button class="btn btn-custom w-100">TÌM KIẾM SÂN CHƠI</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="container mt-4">
+  <div class="text-center">
+    <h2>LỊCH ĐẶT SÂN BÓNG</h2>
+    <p class="fst-italic">Bạn có thể xem và đặt sân ở đây. Hiển thị đầy đủ lịch đặt sân của các sân bóng trong tuần</p>
+  </div>
+</div>
+<app-booking></app-booking>
+<div class="container pt-4">
+  <div class="text-center">
+    <h2>TIN TỨC SÂN BÓNG</h2>
+    <p class="fst-italic">Cập nhật tin tức mới nhất về sân bóng</p>
+  </div>
+  <div class="row row-cols-1 row-cols-md-3 g-4 pt-4 pb-4">
+    <div class="col">
+      <div class="card h-100">
+        <img src="../../../../../assets/img/instagram/instagram-1.jpg" class="card-img-top" alt="..." style="height: 250px;">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">Last updated 3 mins ago</small>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img src="../../../../../assets/img/instagram/instagram-2.jpg" class="card-img-top" alt="..." style="height: 250px;">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">Last updated 3 mins ago</small>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img src="../../../../../assets/img/instagram/instagram-3.jpg" class="card-img-top" alt="..." style="height: 250px;">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">Last updated 3 mins ago</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

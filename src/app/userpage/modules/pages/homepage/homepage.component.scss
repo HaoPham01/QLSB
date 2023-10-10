@@ -1,0 +1,48 @@
+// -----------------slide-----------------------------
+.container-slide {
+    position: relative;
+    text-align: center;
+    color: white;
+    padding-bottom: 30px;
+  }
+  
+  
+  /* Centered text */
+  .centered {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+  }
+
+  .card-title span{
+    font-size: 30px;
+    text-transform: uppercase;
+    color: #33465F;
+    font-weight: bold;
+  }
+
+  .card-title span:first-child{
+    color: lightgreen
+  }
+  .card-title span:last-child{
+    color: lightgreen
+  }
+
+ .btn-custom{
+    background-color: #33465F;
+    color: lightgreen;
+    font-family: Arial, Helvetica, sans-serif;
+ }
+
+
+// -----------------LICH DAT SAT-----------------------------
+ .text-center h2{
+  color: #33465F;
+  font-weight: bold;
+ }
+
+ .text-center p{
+  color: #33465F;
+  font-weight: initial;
+ }

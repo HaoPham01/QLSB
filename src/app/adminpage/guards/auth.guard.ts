@@ -13,7 +13,6 @@ export class AuthGuard{
    canActivate():boolean{
     const tokenPayload = this.auth.decodedToken();
     if(this.auth.isLoggedIn() && tokenPayload.role
-    //&& this.auth.getRoleFromToken()=='admin'
   ){  
        return true;
      }else{

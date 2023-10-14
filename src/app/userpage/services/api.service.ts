@@ -64,8 +64,8 @@ export class ApiService {
   // ------------------------------CheckOut-----------------------------------------------
 
   // ------------------------------VNPAy--------------------------------------------------
-  getVnpay(typePaymentVN: number, orderCode: number){
-    return this.http.get<any>(`${this.baseUrlVnpay}get-url/${typePaymentVN}/${orderCode}`);
+  getVnpay(typePaymentVN: number, orderCode: number, typePrice: any){
+    return this.http.get<any>(`${this.baseUrlVnpay}get-url/${typePaymentVN}/${orderCode}/${typePrice}`);
   }
   postResult(payload: any){
     return this.http.post<any>(`${this.baseUrlVnpay}result`, payload);

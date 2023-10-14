@@ -14,7 +14,9 @@ import { UserStoreService } from 'src/app/userpage/services/user-store.service';
 })
 export class ReturnVnPayComponent implements OnInit {
   constructor(private route: ActivatedRoute ,private api: ApiService, private auth: AuthService, private userStore: UserStoreService, private messageService: MessageService) { }
-  
+  title = '';
+  content = '';
+  iconStatus = false;
   payload ={
     vnp_Amount: 0,
     vnp_BankCode: '',
@@ -61,8 +63,57 @@ export class ReturnVnPayComponent implements OnInit {
           console.log(error.message);
         }
       );
+      if (this.payloadPost.vnp_TransactionStatus === "00") {
+        this.title = "Giao dịch thành công";
+        this.iconStatus = true;
+      } else if (this.payloadPost.vnp_TransactionStatus === "01") {
+        this.title = "Giao dịch chưa hoàn tất";
+      } else if (this.payloadPost.vnp_TransactionStatus === "02") {
+        this.title = "Giao dịch bị lỗi";
+      } else if (this.payloadPost.vnp_TransactionStatus === "04") {
+        this.title = "Giao dịch đảo";
+      } else if (this.payloadPost.vnp_TransactionStatus === "05") {
+        this.title = "VNPAY đang xử lý giao dịch này (GD hoàn tiền)";
+      } else if (this.payloadPost.vnp_TransactionStatus === "06") {
+        this.title = "VNPAY đã gửi yêu cầu hoàn tiền sang Ngân hàng (GD hoàn tiền)";
+      } else if (this.payloadPost.vnp_TransactionStatus === "07") {
+        this.title = "Giao dịch bị nghi ngờ gian lận";
+      } else if (this.payloadPost.vnp_TransactionStatus === "09") {
+        this.title = "GD Hoàn trả bị từ chối";
+      } else {
+        this.title = "Trạng thái giao dịch không hợp lệ";
+      }
+      if (this.payloadPost.vnp_ResponseCode === "00") {
+        
+      } else if (this.payloadPost.vnp_ResponseCode === "07") {
+        this.content = "Trừ tiền thành công. Giao dịch bị nghi ngờ (liên quan tới lừa đảo, giao dịch bất thường).";
+      } else if (this.payloadPost.vnp_ResponseCode === "09") {
+        this.content = "Giao dịch không thành công do: Thẻ/Tài khoản của khách hàng chưa đăng ký dịch vụ InternetBanking tại ngân hàng.";
+      } else if (this.payloadPost.vnp_ResponseCode === "10") {
+        this.content = "Giao dịch không thành công do: Khách hàng xác thực thông tin thẻ/tài khoản không đúng quá 3 lần";
+      } else if (this.payloadPost.vnp_ResponseCode === "11") {
+        this.content = "Giao dịch không thành công do: Đã hết hạn chờ thanh toán. Xin quý khách vui lòng thực hiện lại giao dịch.";
+      } else if (this.payloadPost.vnp_ResponseCode === "12") {
+        this.content = "Giao dịch không thành công do: Thẻ/Tài khoản của khách hàng bị khóa.";
+      } else if (this.payloadPost.vnp_ResponseCode === "13") {
+        this.content = "Giao dịch không thành công do Quý khách nhập sai mật khẩu xác thực giao dịch (OTP). Xin quý khách vui lòng thực hiện lại giao dịch.";
+      } else if (this.payloadPost.vnp_ResponseCode === "24") {
+        this.content = "Giao dịch không thành công do: Khách hàng hủy giao dịch";
+      } else if (this.payloadPost.vnp_ResponseCode === "51") {
+        this.content = "Giao dịch không thành công do: Tài khoản của quý khách không đủ số dư để thực hiện giao dịch.";
+      } else if (this.payloadPost.vnp_ResponseCode === "65") {
+        this.content = "Giao dịch không thành công do: Tài khoản của Quý khách đã vượt quá hạn mức giao dịch trong ngày.";
+      } else if (this.payloadPost.vnp_ResponseCode === "75") {
+        this.content = "Ngân hàng thanh toán đang bảo trì.";
+      } else if (this.payloadPost.vnp_ResponseCode === "79") {
+        this.content = "Giao dịch không thành công do: KH nhập sai mật khẩu thanh toán quá số lần quy định. Xin quý khách vui lòng thực hiện lại giao dịch";
+      } else if (this.payloadPost.vnp_ResponseCode === "99") {
+        this.content = "Các lỗi khác (lỗi còn lại, không có trong danh sách mã lỗi đã liệt kê)";
+      } else {
+        this.content = "Trạng thái giao dịch không hợp lệ";
+      }
+      
     }
-  
-  }
+    }
 }
 

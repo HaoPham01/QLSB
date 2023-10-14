@@ -5,13 +5,13 @@
             <div class="col-sm">
                 <i class="fa fa-phone"></i> <span> 0772805566</span>, <i class="fa fa-envelope-o"></i> <span> Haob1910371@student.ctu.edu.vn</span>
             </div>
-            <div class="col-sm" *ngIf="login == false">
+            <div class="col-sm" *ngIf="login == false || tokenPayload != null">
                 <div class="float-end">
                     <a href="/userSignup" class="p-1 text-decoration-none"><span >Đăng ký</span></a>
                     <a href="/userLogin" class="p-1 text-decoration-none"><span >Đăng nhập</span></a>
                 </div>
             </div>
-            <div class="col-sm" *ngIf="login == true">
+            <div class="col-sm" *ngIf="login == true && tokenPayload == null">
               <div class="float-end">
                   <div class="dropdown">
                     <a class="dropdown d-flex align-items-center hidden-arrow text-decoration-none " role="button" data-bs-toggle="dropdown" aria-expanded="false">

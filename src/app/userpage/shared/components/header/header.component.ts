@@ -14,11 +14,13 @@ export class HeaderComponent implements OnInit {
   public tokenPayload = "";
   public Email : string = "";
   public userId = localStorage['userId'];
-  public fullName: string = "";
+  public fullName= "";
   constructor(private api: ApiService, private auth: AuthService, private userStore: UserStoreService) { }
   ngOnInit() {
     this.login = this.auth.isLoggedIn();
     this.tokenPayload = this.auth.decodedToken().role;
+    this.fullName = this.auth.decodedToken().unique_name;
+    localStorage.setItem('fullName', this.fullName);
     if(this.login==true && this.tokenPayload == null){
     this.userStore.getEmailFormStore().subscribe(val=>{
       let emailFromToken = this.auth.getEmailFromToken();
@@ -27,11 +29,6 @@ export class HeaderComponent implements OnInit {
         localStorage.setItem('userId', res);
       });
       localStorage.setItem('emailUser', this.Email);
-    });
-    this.userStore.getFullNameFromStore().subscribe(val=>{
-      let fullNamefromToken = this.auth.getFullNameFromToken();
-      this.fullName = val || fullNamefromToken
-      localStorage.setItem('fullName', this.fullName);
     });
   }
 }

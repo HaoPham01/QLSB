@@ -15,3 +15,17 @@ export class StatusPipe implements PipeTransform {
   }
 
 }
+
+@Pipe({
+  name: 'statusPrice'
+})
+export class StatusPrice implements PipeTransform {
+
+  transform(value: string): string {
+    if (value=='1') {
+      return 'Đã thanh toán';
+    }else if(value=='-1') {
+      return 'Đã cọc 30%';
+    }else return ''
+  }
+}

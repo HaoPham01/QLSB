@@ -14,6 +14,9 @@ import { BookingComponent } from './userpage/modules/pages/booking/booking.compo
 import { ContactComponent } from './userpage/modules/pages/contact/contact.component';
 import { CheckoutComponent } from './userpage/modules/pages/checkout/checkout.component';
 import { ReturnVnPayComponent } from './userpage/modules/pages/return-vn-pay/return-vn-pay.component';
+import { BookingfieldComponent } from './adminpage/modules/staff-pages/bookingfield/bookingfield.component';
+import { StaffAuthGuard } from './adminpage/guards/staffauth.guard';
+import { LayoutComponent } from './adminpage/modules/staff-pages/layout/layout.component';
 
 
 const routes: Routes = [
@@ -24,6 +27,15 @@ const routes: Routes = [
       { path: 'pages', loadChildren: () => import('./adminpage/modules/pages/pages.module').then((m) => m.PagesModule) }
     ], 
     canActivate:[AuthGuard]
+  },
+
+  {
+    path: 'staff',
+    component: LayoutComponent, 
+    children: [
+      { path: 'pages', loadChildren: () => import('./adminpage/modules/staff-pages/staff-pages.module').then((m) => m.StaffPagesModule) }
+    ], 
+    canActivate:[StaffAuthGuard]
   },
 
 // ----------------------PublicRouter---------------------------

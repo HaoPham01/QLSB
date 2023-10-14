@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { DataService } from '../../services/data.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-default',
@@ -6,15 +11,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./default.component.scss']
 })
 export class DefaultComponent implements OnInit {
-
-  sideBarOpen = true;
-  constructor() { }
+  constructor(private router: Router, private auth: AuthService) { }
 
   ngOnInit(): void {
+    this.router.navigate(['admin/pages/qladmin'])
   }
 
-  sideBarToggler($event: any) {
-    this.sideBarOpen = !this.sideBarOpen;
-  }
 
 }

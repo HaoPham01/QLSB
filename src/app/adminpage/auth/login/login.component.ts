@@ -33,8 +33,13 @@ onLogin(){
       this.auth.storeRefreshToken(res.refreshToken);
       const tokenPayload = this.auth.decodedToken();
       this.adminStore.setEmailForStore(tokenPayload.email);
-      this.adminStore.setRoleForStore(tokenPayload.role); 
-      this.router.navigate(['admin']);
+      this.adminStore.setRoleForStore(tokenPayload.role);
+      if(tokenPayload.role == 'admin') {
+        this.router.navigate(['admin']);  
+      } else
+      {
+        this.router.navigate(['staff']);  
+      }
       this.messageService.add({
         severity: 'success',
         summary: 'Thành công',

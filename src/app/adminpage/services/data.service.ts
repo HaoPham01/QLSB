@@ -85,6 +85,8 @@ export class DataService {
     const url = `${this.REST_API_SERVER}/Price/put-price`;
     return this.httpClient.put<any>(url, payload,this.httpOptions);
   }
+   // ------------------QUAN LY FIELD------------------
+
 
    // ------------------QUAN LY USER------------------
    public getAllUsers(): Observable<any>{
@@ -105,12 +107,15 @@ export class DataService {
   }
 
   public searchUser(payload: string): Observable<any>{
-    console.log('payload',payload);
     const url = `${this.REST_API_SERVER}/User/search/${payload}`;
     return this.httpClient.get<any>(url, this.httpOptions);
   }
 
-  // ------------------QUAN LY News------------------
+  // ------------------QUAN LY USER------------------
+
+
+
+  // ------------------QUAN LY NEWS------------------
   uploadImage(image: File) {
     const formData = new FormData();
     formData.append('image', image);
@@ -118,8 +123,15 @@ export class DataService {
     return this.httpClient.post(url, formData);
   }
 
+  // ------------------QUAN LY NEWS------------------
 
-  getVnpay(typePaymentVN: number, orderCode: number): Observable<string> {
-    return this.httpClient.get<string>(`${this.REST_API_SERVER}/VnPayment/get-url/${typePaymentVN}/${orderCode}`, this.httpOptions);
+
+
+  // -------------------------------------STAFF---------------------------------------------------------------
+  // ------------------BOOKING FIELD------------------
+  getBookingField(){
+    const url = `${this.REST_API_SERVER}/Booking/staff-get-booking`;
+    return this.httpClient.get<any>(url, this.httpOptions);
   }
+  // ------------------BOOKING FIELD------------------
 }

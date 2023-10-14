@@ -58,20 +58,17 @@ export class ApiService {
   getBookingById(bookingId: any){
     return this.http.get<any>(`${this.baseUrlBooking}get-booking-by-bookingid/${bookingId}`);
   }
-
-
-
-  // ------------------------------CheckOut-----------------------------------------------
-  // ------------------------------VNPAy--------------------------------------------------
-  // getVnpay(typePaymentVN: number, orderCode: number){
-  //   console.log(typePaymentVN, orderCode);
-  //   return this.http.get<any>(`${this.baseUrlVnpay}get-url/${typePaymentVN}/${orderCode}`);
-  // }
-
-  // getVnpay(typePaymentVN: number, orderCode: number){
-  //   return this.http.get<any>(`${this.baseUrlVnpay}get-url/${typePaymentVN}/${orderCode}`);
-  // }
-  getVnpay(typePaymentVN: number, orderCode: number): Observable<string> {
-    return this.http.get<string>(`${this.baseUrlVnpay}get-url/${typePaymentVN}/${orderCode}`);
+  cancelStatusBooking(bookingId: any){
+    return this.http.get<any>(`${this.baseUrlBooking}cancel-status-booking/${bookingId}`);
   }
+  // ------------------------------CheckOut-----------------------------------------------
+
+  // ------------------------------VNPAy--------------------------------------------------
+  getVnpay(typePaymentVN: number, orderCode: number){
+    return this.http.get<any>(`${this.baseUrlVnpay}get-url/${typePaymentVN}/${orderCode}`);
+  }
+  postResult(payload: any){
+    return this.http.post<any>(`${this.baseUrlVnpay}result`, payload);
+  }
+  // ------------------------------VNPAy--------------------------------------------------
 }

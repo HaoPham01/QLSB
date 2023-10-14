@@ -13,6 +13,7 @@ import { PagenotfoundComponent } from './userpage/auth/pagenotfound/pagenotfound
 import { BookingComponent } from './userpage/modules/pages/booking/booking.component';
 import { ContactComponent } from './userpage/modules/pages/contact/contact.component';
 import { CheckoutComponent } from './userpage/modules/pages/checkout/checkout.component';
+import { ReturnVnPayComponent } from './userpage/modules/pages/return-vn-pay/return-vn-pay.component';
 
 
 const routes: Routes = [
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent},
 // ----------------------PrivateRouter---------------------------
   { path: 'booking/checkout/:id', component: CheckoutComponent, canActivate:[UserAuthGuard]},
+  { path: 'booking/result', component: ReturnVnPayComponent, canActivate:[UserAuthGuard]},
 // ----------------------AuthRouter------------------------------
   { path: 'login', component: LoginComponent },
   { path: 'userLogin', component: UserLoginComponent},

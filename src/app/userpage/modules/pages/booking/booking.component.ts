@@ -60,13 +60,12 @@ export class BookingComponent implements OnInit {
     slotMinTime: '06:00:00', // Giới hạn thời gian từ 6 AM
     slotMaxTime: '23:00:00',  // Giới hạn thời gian đến 11 PM
     allDaySlot: false, // Bỏ chọn cả ngày
-    eventColor: '#04BFBF',
-  
+    //eventColor: '#04BFBF',
+
     };
     this.getEvents();
     this.getFieldList();
   }
-
   
   handleDateSelect(info: any) {
     this.booking.startTime = info.startStr;
@@ -117,6 +116,7 @@ export class BookingComponent implements OnInit {
     this.activeTabId = payload;
     this.api.getBookingFromFieldId(payload).subscribe(res=>{
       this.calendarOptions!.events = res;
+      console.log(res);
     });
     this.booking.fieldId = payload;
 
@@ -139,7 +139,7 @@ export class BookingComponent implements OnInit {
     priceBooking: '',
     startTime: new Date(),
     endTime: new Date(),
-    status: 1,
+    status: -1,
     createDate: new Date(),
     updateDate: new Date(),
   };
@@ -168,6 +168,7 @@ export class BookingComponent implements OnInit {
     this.confirmBookingDialog = false;
     this.route.navigate(['booking/checkout', id]);
   });
+
   }
   }
 }

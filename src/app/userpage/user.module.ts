@@ -5,13 +5,9 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { HomepageComponent } from './modules/pages/homepage/homepage.component';
 import { ToastModule } from 'primeng/toast';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { UserAuthGuard } from './guards/userauth.guard';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AppComponent } from '../app.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
-import { TokenInterceptor } from '../adminpage/interceptors/token.interceptor';
 import { PagenotfoundComponent } from './auth/pagenotfound/pagenotfound.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { BookingComponent } from './modules/pages/booking/booking.component';
@@ -21,6 +17,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ContactComponent } from './modules/pages/contact/contact.component';
 import { CheckoutComponent } from './modules/pages/checkout/checkout.component';
+import { ReturnVnPayComponent } from './modules/pages/return-vn-pay/return-vn-pay.component';
 
 
 
@@ -33,7 +30,8 @@ import { CheckoutComponent } from './modules/pages/checkout/checkout.component';
     PagenotfoundComponent,
     BookingComponent,
     ContactComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    ReturnVnPayComponent
   ],
   imports: [
     CommonModule,
@@ -47,8 +45,7 @@ import { CheckoutComponent } from './modules/pages/checkout/checkout.component';
     BreadcrumbModule,
 
   ],
-  providers: [
-   MessageService],
+  providers: [MessageService,ConfirmationService],
  bootstrap: [AppComponent]
 })
 export class UserModule { }

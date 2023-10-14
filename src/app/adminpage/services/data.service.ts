@@ -117,4 +117,9 @@ export class DataService {
     const url = `${this.REST_API_SERVER}/api/images`;
     return this.httpClient.post(url, formData);
   }
+
+
+  getVnpay(typePaymentVN: number, orderCode: number): Observable<string> {
+    return this.httpClient.get<string>(`${this.REST_API_SERVER}/VnPayment/get-url/${typePaymentVN}/${orderCode}`, this.httpOptions);
+  }
 }

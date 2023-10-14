@@ -8,7 +8,7 @@ import { LayoutsModule } from './adminpage/layouts/layouts.module';
 import { LoginComponent } from './adminpage/auth/login/login.component';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { RouterModule } from '@angular/router';
 import { AuthGuard } from './adminpage/guards/auth.guard';
@@ -42,7 +42,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
     ReactiveFormsModule,
     AdminModule,
   ],
-  providers: [ {provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi: true},MessageService, 
+  providers: [ {provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi: true},MessageService, ConfirmationService,
     UserAuthGuard, 
     AuthGuard],
   bootstrap: [AppComponent]

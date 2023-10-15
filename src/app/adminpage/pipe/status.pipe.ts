@@ -22,10 +22,10 @@ export class StatusPipe implements PipeTransform {
 export class StatusPrice implements PipeTransform {
 
   transform(value: string): string {
-    if (value=='1') {
-      return 'Đã thanh toán';
-    }else if(value=='-1') {
-      return 'Đã cọc 30%';
+    if (value=='-1') {
+      return 'Đã thanh toán tiền sân';
+    }else if(value=='0') {
+      return 'Đã cọc 30% tiền sân';
     }else return ''
   }
 }

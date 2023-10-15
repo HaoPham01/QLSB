@@ -24,7 +24,7 @@
             </button>
         </div>
         <div class="input-group rounded justify-content-end w-25">
-            <input [(ngModel)]="keyword" type="search" class="form-control rounded" placeholder="Tìm kiếm Email"
+            <input [(ngModel)]="keyword" type="search" class="form-control rounded" placeholder="Tìm kiếm bằng sđt"
                 aria-label="Search" aria-describedby="search-addon" />
             <span class="input-group-text border-0" id="search-addon">
                 <i class="fa fa-search" (click)="searchStaffBooking(keyword)"></i>
@@ -32,20 +32,19 @@
         </div>
     </p-toolbar>
 
-    <p-table #dt [value]="staffBookings" [rows]="10" [paginator]="true" [globalFilterFields]="['email']" [rowHover]="true"
-        dataKey="staffBookingId" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    <p-table #dt [value]="staffBookings" [rows]="10" [paginator]="true" [globalFilterFields]="['fieldName']" [rowHover]="true"
+        dataKey="fieldName" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [showCurrentPageReport]="true">
 
         <ng-template pTemplate="header">
             <tr>
                 <th>STT</th>
                 <th pSortableColumn="fieldName">Tên sân<p-sortIcon field="fieldName"></p-sortIcon></th>
+                <th pSortableColumn="startTime">Giờ đặt<p-sortIcon field="startTime"></p-sortIcon></th>
                 <th pSortableColumn="fullName">Tên người đặt<p-sortIcon field="fullName"></p-sortIcon></th>
                 <th pSortableColumn="phone">Số điện thoại<p-sortIcon field="phone"></p-sortIcon></th>
-                <th pSortableColumn="status">Trạng thái thanh toán<p-sortIcon field="status"></p-sortIcon></th>
-                <th pSortableColumn="priceBooking">Giá sân<p-sortIcon field="priceBooking"></p-sortIcon></th>
-                <th pSortableColumn="startTime">Thời gian bắt đầu<p-sortIcon field="startTime"></p-sortIcon></th>
-                <th pSortableColumn="endTime">Thời gian kết thúc<p-sortIcon field="endTime"></p-sortIcon></th>
+                <th pSortableColumn="statusInvoice">Trạng thái thanh toán<p-sortIcon field="statusInvoice"></p-sortIcon></th>
+                <th pSortableColumn="priceBooking">Tiền sân<p-sortIcon field="priceBooking"></p-sortIcon></th>
                 <th></th>
             </tr>
         </ng-template>
@@ -53,27 +52,24 @@
             <tr>
                 <td>{{rowIndex}}</td>
                 <td>{{staffBooking.fieldName}}</td>
+                <td>{{staffBooking.startTime | date: "HH:mm"}} - {{staffBooking.endTime | date: "HH:mm"}}</td>
                 <td>{{staffBooking.fullName}}</td>
                 <td>{{staffBooking.phone}}</td>
-                <td>{{staffBooking.status | statusPrice}}</td>
-                <td>{{staffBooking.priceBooking}}</td>
-                <td>{{staffBooking.startTime | date: "HH:mm:ss"}}</td>
-                <td>{{staffBooking.endTime | date: "HH:mm:ss"}}</td>
+                <td>{{staffBooking.statusInvoice | statusPrice}}</td>
+                <td>{{staffBooking.priceBooking}} Vnđ</td>
                 <td>
-
                     <!-- <button class="btn btn-warning rounded-circle m-1" (click)="editStaffBooking(staffBooking)">
                         <i class="fa fa-pencil"></i>
                     </button>
                     <button class="btn btn-danger rounded-circle m-1" (click)="deleteStaffBooking(staffBooking)">
                         <i class="fa fa-trash"></i>
                     </button> -->
-
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="p-d-flex p-ai-center p-jc-between">
-                Tổng cộng có {{staffBookings ? staffBookings.length : 0 }} Staff.
+                Tổng cộng có {{staffBookings ? staffBookings.length : 0 }} Lịch đặt sân.
             </div>
         </ng-template>
     </p-table>

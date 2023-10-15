@@ -14,7 +14,7 @@ export interface staffBooking{
     bookingId: number,
     userId: number,
     fieldId: number,
-    priceBooking: string,
+    priceBooking: number,
     startTime: Date,
     endTime: Date,
     status: number,
@@ -23,4 +23,5 @@ export interface staffBooking{
     fullName: string,
     phone: string,
     fieldName: string,
+    statusInvoice: number
 }

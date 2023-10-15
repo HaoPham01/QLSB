@@ -18,7 +18,7 @@ export class BookingfieldComponent implements OnInit {
     bookingId: 0,
     userId: 0,
     fieldId: 0,
-    priceBooking: '',
+    priceBooking: 0,
     startTime: new Date(),
     endTime: new Date(),
     status: 0,
@@ -27,6 +27,7 @@ export class BookingfieldComponent implements OnInit {
     fullName: '',
     phone: '',
     fieldName: '',
+    statusInvoice: 0
   };
   
   public staffBooking: staffBooking = Object.assign({}, this.newStaffBooking);

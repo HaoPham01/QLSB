@@ -18,7 +18,6 @@ export class ReturnVnPayComponent implements OnInit {
   content = '';
   iconStatus = false;
   payload ={
-    vnp_Amount: 0,
     vnp_BankCode: '',
     vnp_BankTranNo: '',
     vnp_CardType: '',
@@ -32,10 +31,11 @@ export class ReturnVnPayComponent implements OnInit {
     vnp_ResponseCode: '',
     vnp_TransactionStatus: '',
     vnp_TxnRef: 0,
+    vnp_Amount: 0,
   }
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.payload.vnp_Amount = params['vnp_Amount'];
+      this.payloadPost.vnp_Amount = params['vnp_Amount'];
       this.payload.vnp_BankCode = params['vnp_BankCode'];
       this.payload.vnp_BankTranNo = params['vnp_BankTranNo'];
       this.payload.vnp_CardType = params['vnp_CardType'];

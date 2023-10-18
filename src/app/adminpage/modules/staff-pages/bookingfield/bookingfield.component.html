@@ -15,26 +15,35 @@
                 </ol>
             </div>
         </div>
-        <div class="d-flex justify-content-start">
-            <!-- <button class="btn btn-success btn-circle m-1" id="button-plus" (click)="openNew()">
-                <i class="fa fa-plus"></i>
-            </button> -->
-            <button class="btn btn-success btn-circle m-1" id="button-refresh" (click)="loadStaffBooking()">
-                <i class="fa fa-refresh"></i>
-            </button>
+        <div>
+            <ul class="nav nav-tabs">
+                <li  *ngFor="let tab of tabs">
+                  <button class="nav-link fw-bold" style=" color: black;" (click)="loadStaffBookingFromField(tab.fieldId)" [class.active]="activeTabId === tab.fieldId "
+                   >{{tab.fieldName}}</button>
+                </li>
+              </ul>
         </div>
-        <div class="input-group rounded justify-content-end w-25">
-            <input [(ngModel)]="keyword" type="search" class="form-control rounded" placeholder="Tìm kiếm bằng sđt"
-                aria-label="Search" aria-describedby="search-addon" />
-            <span class="input-group-text border-0" id="search-addon">
-                <i class="fa fa-search" (click)="searchStaffBooking(keyword)"></i>
-            </span>
-        </div>
+            <div class="d-flex">
+                <!-- <button class="btn btn-success btn-circle m-1" id="button-plus" (click)="openNew()">
+                    <i class="fa fa-plus"></i>
+                </button> -->
+                <!-- <button class="btn btn-success btn-circle m-1" id="button-refresh" (click)="loadStaffBooking()">
+                    <i class="fa fa-refresh"></i>
+                </button> -->
+                <div class="text-center">GIỜ HIỆN TẠI {{ currentTime | date: 'HH:mm:ss' }}</div>
+                <div class="input-group rounded w-100">
+                    <input [(ngModel)]="keyword" type="search" class="form-control rounded" placeholder="Tìm kiếm bằng sđt"
+                        aria-label="Search" aria-describedby="search-addon" />
+                    <span class="input-group-text border-0" id="search-addon">
+                        <i class="fa fa-search" (click)="searchStaffBooking(keyword)"></i>
+                    </span>
+                </div>
+            </div>
     </p-toolbar>
 
-    <p-table #dt [value]="staffBookings" [rows]="10" [paginator]="true" [globalFilterFields]="['fieldName']" [rowHover]="true"
-        dataKey="fieldName" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [showCurrentPageReport]="true">
+    <p-table #dt [value]="staffBookings" [rows]="10" [paginator]="true" [globalFilterFields]="['fieldName']"
+        [rowHover]="true" dataKey="fieldName"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
 
         <ng-template pTemplate="header">
             <tr>
@@ -43,7 +52,8 @@
                 <th pSortableColumn="startTime">Giờ đặt<p-sortIcon field="startTime"></p-sortIcon></th>
                 <th pSortableColumn="fullName">Tên người đặt<p-sortIcon field="fullName"></p-sortIcon></th>
                 <th pSortableColumn="phone">Số điện thoại<p-sortIcon field="phone"></p-sortIcon></th>
-                <th pSortableColumn="statusInvoice">Trạng thái thanh toán<p-sortIcon field="statusInvoice"></p-sortIcon></th>
+                <th pSortableColumn="statusInvoice">Trạng thái thanh toán<p-sortIcon field="statusInvoice"></p-sortIcon>
+                </th>
                 <th pSortableColumn="priceBooking">Tiền sân<p-sortIcon field="priceBooking"></p-sortIcon></th>
                 <th></th>
             </tr>
@@ -58,12 +68,15 @@
                 <td>{{staffBooking.statusInvoice | statusPrice}}</td>
                 <td>{{staffBooking.priceBooking}} Vnđ</td>
                 <td>
-                    <!-- <button class="btn btn-warning rounded-circle m-1" (click)="editStaffBooking(staffBooking)">
-                        <i class="fa fa-pencil"></i>
+                    <button class="btn btn-danger rounded-circle m-1" (click)="cancel(staffBooking.idInvoice)">
+                        <i class="fa fa-times"></i>
                     </button>
-                    <button class="btn btn-danger rounded-circle m-1" (click)="deleteStaffBooking(staffBooking)">
-                        <i class="fa fa-trash"></i>
-                    </button> -->
+                    <button class="btn btn-warning rounded-circle m-1" (click)="getServices(staffBooking.bookingId)">
+                        <i class="fa fa-plus-square" style="color: #fff;"></i>
+                    </button>
+                    <button class="btn btn-success rounded-circle m-1" (click)="getInvoice(staffBooking.bookingId)">
+                        <i class="fa fa-check-square-o"></i>
+                    </button>
                 </td>
             </tr>
         </ng-template>
@@ -75,44 +88,121 @@
     </p-table>
 </div>
 
-<!-- <p-dialog [(visible)]="staffBookingDialog" [style]="{width: '1000px'}" header="Chi tiết Staff" [modal]="true"
-    styleClass="p-fluid">
-
-    <div class="row">
-        <div class="form-group col-md-6">
-            <label for="email">Email</label>
-            <input type="email" [(ngModel)]="staffBooking.email" class="form-control" id="email" placeholder="Email">
+<p-dialog [(visible)]="confirmInvoiceDialog" [style]="{width: '600px'}" [modal]="true">
+    <div class="text-center">
+        <p>Sân bóng cỏ nhân tạo</p>
+        <h1 class="font-monospace fst-italic">MH SPORT</h1>
+        <p><i class="fa fa-map-marker"></i> Đường 3.2 - TP.Cần Thơ</p>
+        <p><i class="fa fa-phone"></i> 0772805566</p>
+        <hr style="margin-left: 50px; margin-right: 50px;">
+        <p class="fw-bold">HÓA ĐƠN THANH TOÁN</p>
+        <div class="row">
+            <div class="col">
+                <p>SỐ HĐ: {{invoice.bookingId}}</p>
+            </div>
+            <div class="col">
+                <p>Sân bóng: {{invoice.fieldName}}</p>
+            </div>
         </div>
-        <div *ngIf="!hidePass" class="form-group col-md-6">
-            <label for="password">Mật khẩu</label>
-            <input type="password" [(ngModel)]="staffBooking.password" class="form-control" id="password"
-                placeholder="Mật khẩu">
+        <div class="row">
+            <div class="col">
+                <p><i class="fa fa-calendar"></i> {{invoice.createDate | date: "HH:mm, dd/MM/yyyy"}}</p>
+            </div>
+            <div class="col">
+                <p>Nhân viên: {{invoice.adminCreate}}</p>
+            </div>
         </div>
+        <table class="table table-borderless">
+            <tr>
+                <th>Tên dịch vụ</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th>Tổng tiền</th>
+            </tr>
+            <tr>
+                <td>Đặt sân bóng ({{invoice.startTime | date: "HH:mm"}} - {{invoice.endTime | date: "HH:mm"}})</td>
+                <td>1</td>
+                <td>{{invoice.priceBooking}}</td>
+                <td>{{invoice.priceBooking}} Vnđ</td>
+            </tr>
+            <tr *ngFor="let item of services">
+                <td>{{item.type}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.totalPrice}} Vnđ</td>
+            </tr>
+            <tr>
+                <td><hr></td>
+                <td><hr></td>
+                <td><hr></td>
+                <td><hr></td>
+            </tr>
+            <tr>
+                <td>Tổng tiền</td>
+                <td></td>
+                <td></td>
+                <td>{{confirmInvoice.totalAmount}} Vnđ</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>-</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Số tiền đã thanh toán trước</td>
+                <td></td>
+                <td></td>
+                <td>{{invoice.payOnline}} Vnđ</td>
+            </tr>
+            <tr>
+                <td><hr></td>
+                <td><hr></td>
+                <td><hr></td>
+                <td><hr></td>
+            </tr>
+            <tr>
+                <td>Số tiền còn lại phải trả</td>
+                <td></td>
+                <td></td>
+                <td>{{confirmInvoice.totalAmount - invoice.payOnline}} Vnđ</td>
+            </tr>
+        </table>
     </div>
-    <div class="row">
-        <div class="form-group col-md-6">
-            <label for="fullName">Họ tên</label>
-            <input type="fullName" [(ngModel)]="staffBooking.fullName" class="form-control" id="fullName" placeholder="Họ tên">
-        </div>
-        <div class="form-group col-md-6">
-            <label for="role">Role</label>
-            <select id="role" class="form-select" [(ngModel)]="staffBooking.role" aria-label="Select type">
-                <option value="staffBooking">Staff</option>
-                <option value="staff">Staff</option>
-            </select>
-        </div>
-    </div>
-
     <ng-template pTemplate="footer">
-        <button class="btn " (click)="hideDialog()">
+        <button class="btn " (click)="confirmInvoiceDialog = false">
             <i class="fa fa-times"></i> Hủy
         </button>
-        <button class="btn " (click)="saveStaffBooking()">
-            <i class="fa fa-check"></i> Chấp nhận
+        <button class="btn " (click)="thanhToan()">
+            <i class="fa fa-check"></i> Xác nhận thanh toán
         </button>
     </ng-template>
 </p-dialog>
 
-<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog> -->
+<p-dialog [(visible)]="servicesDialog" [style]="{width: '1000px'}" header="Sử dụng dịch vụ khác" [modal]="true"
+    styleClass="p-fluid">
+    <div>
+        <table class="table text-center">
+            <tr>
+                <th>Tên dịch vụ</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th></th>
+            </tr>
+            <tr *ngFor="let item of services">
+                <td>{{item.type}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.price}} Vnđ</td>
+                <td><i class="fa fa-times" (click)="removeService(item.svId)"></i></td>
+            </tr>
+            <tr>
+                <td><input type="text"  class="form-control" [(ngModel)]="newService.type"></td>
+                <td><input type="number"  class="form-control" [(ngModel)]="newService.quantity"></td>
+                <td><input type="text"  class="form-control"  [(ngModel)]="newService.price"></td>
+                <td><i class="fa fa-plus" (click)="addService()"></i></td>
+            </tr>
+        </table>
+    </div>
+</p-dialog>
 
-
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

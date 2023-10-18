@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, forwardRef } from '@angular/core';
-import { CalendarOptions, Calendar, EventClickArg } from '@fullcalendar/core';
+import { CalendarOptions, Calendar, EventClickArg, EventApi } from '@fullcalendar/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { ApiService } from 'src/app/userpage/services/api.service';
 import { AuthService } from 'src/app/userpage/services/auth.service';
@@ -13,13 +13,12 @@ import { DatePipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 
-
 @Component({
-  selector: 'app-booking',
-  templateUrl: './booking.component.html',
-  styleUrls: ['./booking.component.scss']
+  selector: 'app-booking-all',
+  templateUrl: './booking-all.component.html',
+  styleUrls: ['./booking-all.component.scss']
 })
-export class BookingComponent implements OnInit {
+export class BookingAllComponent implements OnInit {
 
   calendarOptions?: CalendarOptions;
   eventsModel: any;
@@ -50,58 +49,70 @@ export class BookingComponent implements OnInit {
     slotDuration: '00:30:00',
     slotLabelInterval: '01:00:00',
     locale: viLocale, // Thêm ngôn ngữ tiếng Việt vào đây
-    weekNumbers: true,
-     validRange: {
-      start: new Date() // Lịch chỉ hiển thị từ hôm nay trở đi
-     },
+    // weekNumbers: true,
+    //  validRange: {
+    //   start: new Date() // Lịch chỉ hiển thị từ hôm nay trở đi
+    //  },
     selectable: true, // Cho phép chọn khoảng thời gian
-    select: this.handleDateSelect.bind(this),
+    //select: this.handleDateSelect.bind(this),
      // Bắt sự kiện khi chọn
     slotMinTime: '06:00:00', // Giới hạn thời gian từ 6 AM
     slotMaxTime: '23:00:00',  // Giới hạn thời gian đến 11 PM
     allDaySlot: false, // Bỏ chọn cả ngày
     //eventColor: '#04BFBF',
-
+    eventClick: this.handleEventClick.bind(this),
     };
     this.getEvents();
     this.getFieldList();
   }
   
-  handleDateSelect(info: any) {
-    this.booking.startTime = info.startStr;
-    this.booking.endTime = info.endStr;
-    
-    const datePipe = new DatePipe('en-US');
-    // Chuỗi thời gian đầu vào
-    const startStr = info.startStr;
-    const endStr = info.endStr;
-    // Chuyển đổi chuỗi thành đối tượng giờ
-    const startDateTime = datePipe.transform(startStr, 'HH:mm:ss');
-    const endDateTime = datePipe.transform(endStr, 'HH:mm:ss');
-    if(startDateTime && endDateTime){
-    this.api.getPriceField(this.booking.fieldId, startDateTime, endDateTime).subscribe(res=>{
-      this.booking.priceBooking = res[0].price
-    });
-    }
-
-    this.fullName = localStorage['fullName'];
-    this.api.getNameFieldById(this.booking.fieldId).subscribe((res) => {
-      this.fieldName = res.fieldName;
-    },
-    (err) => {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Lỗi',
-        detail: err.message,
-        life: 3000,
-      });
-    },);
-
-    const userId = localStorage['userId'];
-    this.booking.userId = parseInt(userId);
-    console.log(info)
-    this.confirmBookingDialog = true;
+  handleEventClick(arg: EventClickArg) {
+    const clickedEvent = arg.event;
+  
+    // Gọi hàm bạn muốn khi người dùng nhấp vào sự kiện
+    this.yourFunction(clickedEvent);
   }
+  yourFunction(event: EventApi) {
+    // Xử lý logic khi người dùng nhấp vào sự kiện ở đây
+    console.log('Sự kiện đã được nhấp vào:', event);
+    // ...
+  }
+    
+  // handleDateSelect(info: any) {
+  //   this.booking.startTime = info.startStr;
+  //   this.booking.endTime = info.endStr;
+    
+  //   const datePipe = new DatePipe('en-US');
+  //   // Chuỗi thời gian đầu vào
+  //   const startStr = info.startStr;
+  //   const endStr = info.endStr;
+  //   // Chuyển đổi chuỗi thành đối tượng giờ
+  //   const startDateTime = datePipe.transform(startStr, 'HH:mm:ss');
+  //   const endDateTime = datePipe.transform(endStr, 'HH:mm:ss');
+  //   if(startDateTime && endDateTime){
+  //   this.api.getPriceField(this.booking.fieldId, startDateTime, endDateTime).subscribe(res=>{
+  //     this.booking.priceBooking = res[0].price
+  //   });
+  //   }
+
+  //   this.fullName = localStorage['fullName'];
+  //   this.api.getNameFieldById(this.booking.fieldId).subscribe((res) => {
+  //     this.fieldName = res.fieldName;
+  //   },
+  //   (err) => {
+  //     this.messageService.add({
+  //       severity: 'error',
+  //       summary: 'Lỗi',
+  //       detail: err.message,
+  //       life: 3000,
+  //     });
+  //   },);
+
+  //   const userId = localStorage['userId'];
+  //   this.booking.userId = parseInt(userId);
+  //   console.log(info)
+  //   this.confirmBookingDialog = true;
+  // }
 
 
   getEvents(){
@@ -148,28 +159,5 @@ export class BookingComponent implements OnInit {
   public fieldName : string = '';
 
 
-  thanhToan(){
-  const tokenPayload = this.auth.decodedToken().role;
-  if(this.auth.isLoggedIn()== false || tokenPayload != null){
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Lỗi',
-      detail: 'Vui lòng đăng nhập bằng tài khoản thành viên để thanh toán',
-      life: 3000,
-    });
-  }else {
-  this.api.addBooking(this.booking).subscribe(res=>{
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Thành công',
-      detail: 'Thêm thành công',
-      life: 3000,
-    });
-    const id = res
-    this.confirmBookingDialog = false;
-    this.route.navigate(['booking/checkout', id]);
-  });
 
-  }
-  }
 }

@@ -23,5 +23,10 @@ export interface staffBooking{
     fullName: string,
     phone: string,
     fieldName: string,
-    statusInvoice: number
+    statusInvoice: number,
+    pricePay: number,
+    idInvoice: number,
+    adminCreate: string,
+    payOnline: number,
 }
+

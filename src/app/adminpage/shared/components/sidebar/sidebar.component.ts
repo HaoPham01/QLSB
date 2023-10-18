@@ -66,12 +66,24 @@ export class SidebarComponent implements OnInit {
         {
           label: 'Lịch đặt sân',
           icon: 'pi pi-fw pi-calendar',
-          command: () => this.router.navigate(['staff/pages/qlbooking'])
+          //command: () => this.router.navigate(['staff/pages/qlbooking'])
+          items: [
+            {
+                label: 'Lịch sân hôm nay',
+                icon: 'pi pi-fw pi-money-bill',
+                command: () => this.router.navigate(['staff/pages/qlbooking'])
+            },
+            {
+                label: 'Lịch sân tổng',
+                icon: 'pi pi-fw pi-money-bill',
+                command: () => this.router.navigate(['staff/pages/qlbookingall'])
+            }
+        ]
         },
         {
           label: 'Lịch sử hóa đơn',
           icon: 'pi pi-fw pi-file',
-          command: () => this.router.navigate(['staff/pages/qlbooking'])
+          command: () => this.router.navigate(['staff/pages/qlinvoice'])
         },
         {
           label: 'Kết toán danh thu',

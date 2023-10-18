@@ -14,10 +14,14 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { StaffPagesRoutingModule } from './staff-pages-routing.module';
 import { BookingfieldComponent } from './bookingfield/bookingfield.component';
 import { LayoutComponent } from './layout/layout.component';
+import { BookingAllComponent } from './booking-all/booking-all.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { InvoiceComponent } from './invoice/invoice.component';
+
 
 
 @NgModule({
-  declarations: [StatusPrice ,BookingfieldComponent, LayoutComponent],
+  declarations: [StatusPrice ,BookingfieldComponent, LayoutComponent, BookingAllComponent, InvoiceComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -28,7 +32,8 @@ import { LayoutComponent } from './layout/layout.component';
     DialogModule,
     ConfirmDialogModule,
     BreadcrumbModule,
-    StaffPagesRoutingModule
+    StaffPagesRoutingModule,
+    FullCalendarModule,
     
   ],
   providers: [MessageService,ConfirmationService],

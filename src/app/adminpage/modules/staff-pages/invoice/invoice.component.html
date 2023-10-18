@@ -1,0 +1,176 @@
+<p-toast></p-toast>
+<div class="grid">
+    <button *ngIf="loading" class="btn btn-success offset-md-5 cursor-wait mt-4" type="button" disabled>
+        Loading...<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    </button>
+</div>
+<div class="card" *ngIf="!loading">
+    <p-toolbar styleClass="p-mb-4">
+        <div class="row w-100">
+            <div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item text-uppercase">Staff</li>
+                    <li class="breadcrumb-item text-success text-uppercase" aria-current="page">Lịch sử hóa đơn
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="d-flex flex-row ">
+            <input class="rounded w-100" type="date" [(ngModel)]="dateString">
+            <button class="btn btn-success btn-circle m-1" id="button-refresh" (click)="getInvoiceByDate()">
+                <i class="fa fa-check-square-o"></i>
+            </button>
+        </div>
+        <div class="d-flex flex-row">
+            <button class="btn btn-success btn-circle m-1" id="button-refresh"  (click)="refresh()">
+                <i class="fa fa-refresh"></i>
+            </button>
+            <div class="input-group rounded w-100">
+                <input [(ngModel)]="keyword" type="search" class="form-control rounded" placeholder="Mã hóa đơn"
+                    aria-label="Search" aria-describedby="search-addon" />
+                <span class="input-group-text border-0" id="search-addon">
+                    <i class="fa fa-search" (click)="searchStaffBooking(keyword)"></i>
+                </span>
+            </div>
+        </div>
+    </p-toolbar>
+
+    <p-table #dt [value]="invoices" [rows]="10" [paginator]="true" [globalFilterFields]="['fieldName']"
+        [rowHover]="true" dataKey="fieldName"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th>STT</th>
+                <th pSortableColumn="idInvoice">Mã hóa đơn<p-sortIcon field="idInvoice"></p-sortIcon></th>
+                <th pSortableColumn="createDate">Ngày lập<p-sortIcon field="createDate"></p-sortIcon></th>
+                <th pSortableColumn="priceBooking">Tổng tiền<p-sortIcon field="priceBooking"></p-sortIcon></th>
+                <th pSortableColumn="createDate">Nhân viên lập hóa đơn<p-sortIcon field="createDate"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-invoices let-rowIndex="rowIndex">
+            <tr>
+                <td>{{rowIndex}}</td>
+                <td>{{invoices.idInvoice}}</td>
+                <td>{{invoices.createDate | date: "HH:mm:ss , dd/MM/yyyy"}}</td>
+                <td>{{invoices.priceBooking}} Vnđ</td>
+                <td>{{invoices.adminName}}</td>
+                <td>
+                    <button class="btn btn-success rounded-circle m-1" (click)="getInvoiceDetail(invoices)">
+                        <i class="fa fa-eye"></i>
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                Tổng cộng có {{invoices ? invoices.length : 0 }} hóa đơn.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="invoiceDialog" [style]="{width: '600px'}" [modal]="true">
+    <div class="text-center">
+        <p>Sân bóng cỏ nhân tạo</p>
+        <h1 class="font-monospace fst-italic">MH SPORT</h1>
+        <p><i class="fa fa-map-marker"></i> Đường 3.2 - TP.Cần Thơ</p>
+        <p><i class="fa fa-phone"></i> 0772805566</p>
+        <hr style="margin-left: 50px; margin-right: 50px;">
+        <p class="fw-bold">HÓA ĐƠN THANH TOÁN</p>
+        <div class="row">
+            <div class="col">
+                <p>SỐ HĐ: {{invoice.bookingId}}</p>
+            </div>
+            <div class="col">
+                <p>Sân bóng: {{invoice.fieldName}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p><i class="fa fa-calendar"></i> {{invoice.createDate | date: "HH:mm, dd/MM/yyyy"}}</p>
+            </div>
+            <div class="col">
+                <p>Nhân viên: {{invoice.adminName}}</p>
+            </div>
+        </div>
+        <table class="table table-borderless">
+            <tr>
+                <th>Tên dịch vụ</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th>Tổng tiền</th>
+            </tr>
+            <tr>
+                <td>Đặt sân bóng ({{invoice.startTime | date: "HH:mm"}} - {{invoice.endTime | date: "HH:mm"}})</td>
+                <td>1</td>
+                <td>{{invoice.priceBooking}}</td>
+                <td>{{invoice.priceBooking}} Vnđ</td>
+            </tr>
+            <tr *ngFor="let item of services">
+                <td>{{item.type}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.totalPrice}} Vnđ</td>
+            </tr>
+            <tr>
+                <td>
+                    <hr>
+                </td>
+                <td>
+                    <hr>
+                </td>
+                <td>
+                    <hr>
+                </td>
+                <td>
+                    <hr>
+                </td>
+            </tr>            
+            <tr>
+                <td>Số tiền thanh toán online</td>
+                <td></td>
+                <td></td>
+                <td>{{invoice.payOnline}} Vnđ</td>
+            </tr>
+            <tr *ngIf="cancel == false">
+                <td>Tổng tiền</td>
+                <td></td>
+                <td></td>
+                <td>{{invoice.pricePay}} Vnđ</td>
+            </tr>
+            <tr *ngIf="cancel == true">
+                <p class="fst-italic">Khách hàng không đến nhận sân</p>
+            </tr>
+        </table>
+    </div>
+</p-dialog>
+
+<!-- <p-dialog [(visible)]="servicesDialog" [style]="{width: '1000px'}" header="Sử dụng dịch vụ khác" [modal]="true"
+    styleClass="p-fluid">
+    <div>
+        <table class="table text-center">
+            <tr>
+                <th>Tên dịch vụ</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th></th>
+            </tr>
+            <tr *ngFor="let item of services">
+                <td>{{item.type}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.price}} Vnđ</td>
+                <td><i class="fa fa-times" (click)="removeService(item.svId)"></i></td>
+            </tr>
+            <tr>
+                <td><input type="text" class="form-control" [(ngModel)]="newService.type"></td>
+                <td><input type="number" class="form-control" [(ngModel)]="newService.quantity"></td>
+                <td><input type="text" class="form-control" [(ngModel)]="newService.price"></td>
+                <td><i class="fa fa-plus" (click)="addService()"></i></td>
+            </tr>
+        </table>
+    </div>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog> -->

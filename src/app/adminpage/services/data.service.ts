@@ -35,7 +35,6 @@ export class DataService {
   }
 
   public search(payload: string): Observable<any>{
-    console.log('payload',payload);
     const url = `${this.REST_API_SERVER}/Admin/search/${payload}`;
     return this.httpClient.get<any>(url, this.httpOptions);
   }
@@ -49,6 +48,11 @@ export class DataService {
     const url = `${this.REST_API_SERVER}/Admin/get-email-by-id/${payload}`;
     return this.httpClient.get<any>(url, this.httpOptions);
   }
+
+  public getNameByEmail(payload: string): Observable<any>{
+    const url = `${this.REST_API_SERVER}/Admin/get-name-by-email/${payload}`;
+    return this.httpClient.get<any>(url, this.httpOptions);
+  }
   // ------------------QUAN LY ADMIN------------------
 
 
@@ -59,7 +63,6 @@ export class DataService {
     return this.httpClient.get<any>(url, this.httpOptions);
   }
   public postField(payload: any): Observable<any>{
-    console.log('payload',payload);
     const url = `${this.REST_API_SERVER}/Footballfield/add-footballfield`;
     return this.httpClient.post<any>(url, payload, this.httpOptions);
   }
@@ -133,5 +136,52 @@ export class DataService {
     const url = `${this.REST_API_SERVER}/Booking/staff-get-booking`;
     return this.httpClient.get<any>(url, this.httpOptions);
   }
+  getBookingFieldById(fieldId: any){
+    const url = `${this.REST_API_SERVER}/Booking/staff-get-booking/${fieldId}`;
+    return this.httpClient.get<any>(url, this.httpOptions);
+  }
+  getInvoice(BookingId: number){
+    const url = `${this.REST_API_SERVER}/Invoice/staff-get-booking/${BookingId}`;
+    return this.httpClient.get<any>(url, this.httpOptions);
+  }
+  getPriceInvoice(BookingId: number){
+    const url = `${this.REST_API_SERVER}/Invoice/get-price-invoice/${BookingId}`;
+    return this.httpClient.get<any>(url, this.httpOptions);
+  }
+  confirmInvoice(payload: any){
+    const url = `${this.REST_API_SERVER}/Invoice/confirm-invoice`;
+    return this.httpClient.post<any>(url, payload, this.httpOptions);
+  }
+  cancelInvoice(payload: any){
+    const url = `${this.REST_API_SERVER}/Invoice/confirm-cancel-invoice`;
+    return this.httpClient.post<any>(url, payload, this.httpOptions);
+  }
+  searchBookingByPhone(keyword: string): Observable<any>{
+    const url = `${this.REST_API_SERVER}/Booking/staff-search-booking/${keyword}`;
+    return this.httpClient.get<any>(url, this.httpOptions);
+  }
+
+
+
+  getService(BookingId: number){
+    const url = `${this.REST_API_SERVER}/Service/get-service/${BookingId}`;
+    return this.httpClient.get<any>(url, this.httpOptions);
+  }
+  addService(payload: any): Observable<any>{
+    console.log('payload',payload);
+    const url = `${this.REST_API_SERVER}/Service/add-service`;
+    return this.httpClient.post<any>(url, payload, this.httpOptions);
+  }
+  removeService(svId: number){
+    const url = `${this.REST_API_SERVER}/Service/remove-service/${svId}`;
+    return this.httpClient.get<any>(url, this.httpOptions);
+  }
   // ------------------BOOKING FIELD------------------
+
+  // ------------------INVOICE-----------------------
+  staffGetInvoice(day: any){
+    console.log(day);
+    const url = `${this.REST_API_SERVER}/Invoice/staff-get-invoice`;
+    return this.httpClient.post<any>(url, day,this.httpOptions);
+  }
 }

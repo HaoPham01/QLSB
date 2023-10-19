@@ -24,6 +24,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { StaffAuthGuard } from './adminpage/guards/staffauth.guard';
+import { CommonModule } from '@angular/common';
 
 
 

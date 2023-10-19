@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 import { AdminComponent } from './admin/admin.component';
+import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { AuthGuard } from '../../guards/auth.guard';
 import { FootballfieldComponent } from './footballfield/footballfield.component';
 import { UserComponent } from './user/user.component';
@@ -12,7 +14,8 @@ const routes: Routes = [
   { path: 'qladmin', component: AdminComponent,},
   { path: 'qlfield', component: FootballfieldComponent,},
   { path: 'qluser', component: UserComponent,},
-  { path: 'qlnews', component: NewsComponent,}
+  { path: 'qlnews', component: NewsComponent,},
+  { path: 'images', component: ImageUploadComponent,},
   // { path: 'admin', loadChildren: () => import('./admin/admin.module').then((m) => m.AdminMoudle) },
 
 //   { path: 'quan-ly-nhan-su', loadChildren: () => import('./quan-ly-nhan-su/quan-ly-nhan-su.module').then((m) => m.QuanLyNhanSuModule) },

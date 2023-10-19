@@ -88,7 +88,20 @@ export class DataService {
     const url = `${this.REST_API_SERVER}/Price/put-price`;
     return this.httpClient.put<any>(url, payload,this.httpOptions);
   }
-   // ------------------QUAN LY FIELD------------------
+  // ------------------QUAN LY FIELD------------------
+
+  // ------------------QUAN LY IMAGE------------------
+  public postFieldImage(payload: any): Observable<any>{
+    console.log('payload',payload);
+    const url = `${this.REST_API_SERVER}/Fieldimage/add-fieldImage`;
+    return this.httpClient.post<any>(url, payload, this.httpOptions);
+  }
+  public postFieldImageUrl(payload: any): Observable<any>{
+    console.log('payload',payload);
+    const url = `${this.REST_API_SERVER}/Fieldimage/add-fieldImageUrl`;
+    return this.httpClient.post<any>(url, payload, this.httpOptions);
+  }
+   // ------------------QUAN LY IMAGE------------------
 
 
    // ------------------QUAN LY USER------------------

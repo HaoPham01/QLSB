@@ -17,7 +17,7 @@ import { ReturnVnPayComponent } from './userpage/modules/pages/return-vn-pay/ret
 import { BookingfieldComponent } from './adminpage/modules/staff-pages/bookingfield/bookingfield.component';
 import { StaffAuthGuard } from './adminpage/guards/staffauth.guard';
 import { LayoutComponent } from './adminpage/modules/staff-pages/layout/layout.component';
-
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   {

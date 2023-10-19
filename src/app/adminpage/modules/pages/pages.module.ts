@@ -19,9 +19,10 @@ import { FootballfieldComponent } from './footballfield/footballfield.component'
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { UserComponent } from './user/user.component';
 import { NewsComponent } from './news/news.component';
+import {ImageUploadComponent} from './image-upload/image-upload.component';
 
 @NgModule({
-  declarations: [AdminComponent,StatusPipe, FootballfieldComponent, UserComponent, NewsComponent],
+  declarations: [AdminComponent,StatusPipe, FootballfieldComponent, UserComponent, NewsComponent, ImageUploadComponent],
   imports: [
     CommonModule,
     RouterModule,
